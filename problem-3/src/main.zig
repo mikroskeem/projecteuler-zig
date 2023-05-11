@@ -7,11 +7,10 @@ pub fn main() !void {
     var res: u64 = num;
 
     var i: u64 = 2;
-    while ((i * i) < res) {
+    while ((i * i) < res) : (i += 1) {
         while (@mod(res, i) == 0) {
             res /= i;
         }
-        i += 1;
     }
 
     try stdout.print("res={}\n", .{res});

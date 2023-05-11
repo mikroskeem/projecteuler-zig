@@ -16,14 +16,12 @@ fn is_palindrome(num: u64) !bool {
 
     // Reverse b
     var b_idx = b.len - 1;
-    while (b_idx > 0) {
+    while (b_idx > 0) : (b_idx -= 1) {
         var src_idx = b.len - 1 - b_idx;
         var tmp_a = b[src_idx];
 
         b[src_idx] = b[b_idx];
         b[b_idx] = tmp_a;
-
-        b_idx -= 1;
     }
 
     return std.mem.eql(u8, a, b);
@@ -41,11 +39,11 @@ pub fn main() !void {
     var r: u64 = 0;
 
     var d: u64 = 990;
-    while (d >= 100) {
+    while (d >= 100) : (d -= 11) {
         var e: u64 = 999;
 
         inner: {
-            while (e >= 100) {
+            while (e >= 100) : (e -= 1) {
                 var v: u64 = d * e;
                 if (r < v and try is_palindrome(v)) {
                     // we found next largest palindrome, cool
@@ -55,12 +53,8 @@ pub fn main() !void {
                 } else if (v < r) {
                     break :inner;
                 }
-
-                e -= 1;
             }
         }
-
-        d -= 11;
     }
 
     try stdout.print("result={}\n", .{r});
